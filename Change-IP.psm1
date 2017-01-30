@@ -59,24 +59,19 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 
 	#Get Current IP which is needed to remove old IP first
 	$currentip = (Get-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily).IPAddress
-	"Current Ip: " + $currentip
 
 	#Get DHCP State.
 	$DHCPState = (Get-NetIPInterface -AddressFamily $AddrFamily -InterfaceIndex $NetIfIndex).Dhcp
-	"DHCP State: " + $DHCPState
-
+	
 	#If Subnetprefix not provided, Use the current one
 	if([string]::IsNullOrEmpty($SubnetLength)) {
 		$SubnetPrefixLength = (Get-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily).PrefixLength
-		"Subnet is empty. Current: " + $SubnetPrefixLength
 	} else {
 		$SubnetPrefixLength = $SubnetLength
-		"Subnet is provided. Current: " + $SubnetPrefixLength + " -- " + $SubnetLength
 	}
 	
 	#If DHCP State is disabled, remove the old static IP. if not, no need to remove it.
 	if($DHCPState -eq "Disabled") {
-		"DHCP State is Disabled"
 		Remove-NetIPAddress -InterfaceIndex $NetIfIndex -IPAddress $currentip -Confirm:$false
 	}
 	
@@ -84,11 +79,13 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 	#if Gateway address provided, set Default Gateway. if not, system will use the old one
 	if($PSBoundParameters.ContainsKey("GatewayIP")) {
 		
+
+		############################## Need to check if Gateway IP exist. if it doesn't, it gives error when try to remove it ######################################################
 		#Remove Default Gateway
-		Remove-NetRoute -InterfaceIndex $NetIfIndex
+		Remove-NetRoute -InterfaceIndex $NetIfIndex -Confirm:$false
 		
 		#if given Gateway IP is $null, don't set Gateway ip(already removed). if not $null, then set given Gateway IP as Gateway
-		if($GatewayIP -eq $null) {
+		if($GatewayIP -like $null) {
 			New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -Confirm:$false
 		} else {
 			New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -DefaultGateway $GatewayIP -Confirm:$false
@@ -98,7 +95,14 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 		New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -Confirm:$false
 	}
 
+	#If DNS Addresses provided, set them up
 	if($PSBoundParameters.ContainsKey("DNSIPs")) {
-		Set-DnsClientServerAddress -InterfaceIndex $NetIfIndex -ServerAddresses $DNSIPs
+
+		#if given DNS address is $null, then remove DNS addresses. if not, set them up
+		if($DNSIPs -eq $null) {
+			Set-DnsClientServerAddress –InterfaceIndex $NetIfIndex -ResetServerAddresses
+		} else {
+			Set-DnsClientServerAddress -InterfaceIndex $NetIfIndex -ServerAddresses $DNSIPs
+		}
 	}
 }
