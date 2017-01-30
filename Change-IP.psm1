@@ -87,7 +87,12 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 		#Remove Default Gateway
 		Remove-NetRoute -InterfaceIndex $NetIfIndex
 		
-		New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -DefaultGateway $GatewayIP -Confirm:$false
+		#if given Gateway IP is $null, don't set Gateway ip(already removed). if not $null, then set given Gateway IP as Gateway
+		if($GatewayIP -eq $null) {
+			New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -Confirm:$false
+		} else {
+			New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -DefaultGateway $GatewayIP -Confirm:$false
+		}
 				
 	} else {
 		New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -Confirm:$false
