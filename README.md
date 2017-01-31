@@ -13,7 +13,7 @@ There is also no need to remove existing IP from powershell if you use powershel
 ## Requiremet
 
 You need to know your Interface Index. you may find it by this command
-`Get-NetIPInterface | select ipaddress,interfaceindex`
+`Get-NetIPAddress | select ipaddress,interfaceindex`
 
 ## Usage
 `*` -> Required
