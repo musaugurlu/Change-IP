@@ -27,9 +27,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="AppVeyor.yml" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include=".gitattributes" />
     <Compile Include=".gitignore" />
     <Compile Include="Change-IP.psd1" />
