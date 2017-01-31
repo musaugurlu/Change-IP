@@ -78,12 +78,13 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 
 	#if Gateway address provided, set Default Gateway. if not, system will use the old one
 	if($PSBoundParameters.ContainsKey("GatewayIP")) {
+				
+		$CurrentGatewayIP = (Get-NetRoute -InterfaceIndex $NetIfIndex | where {($_.DestinationPrefix -like "0.0.0.0/0")}).NextHop
 		
-
-		############################## Need to check if Gateway IP exist. if it doesn't, it gives error when try to remove it ######################################################
-		#Remove Default Gateway
-		Remove-NetRoute -InterfaceIndex $NetIfIndex -Confirm:$false
-		
+		#Remove Default Gateway if exist
+		if($CurrentGatewayIP -notlike "") {
+			Remove-NetRoute -InterfaceIndex $NetIfIndex -Confirm:$false
+		}
 		#if given Gateway IP is $null, don't set Gateway ip(already removed). if not $null, then set given Gateway IP as Gateway
 		if($GatewayIP -like $null) {
 			New-NetIPAddress -InterfaceIndex $NetIfIndex -AddressFamily $AddrFamily -IPAddress $NewIP -PrefixLength $SubnetPrefixLength -Confirm:$false
