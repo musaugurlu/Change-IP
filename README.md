@@ -18,7 +18,7 @@ You need to know your Interface Index. you may find it by this command
 ## Usage
 `*` -> Required
 
-* `Change-IP [your interface index]* [new ip]* [Subnet Length Prefix] [Address family]`
+* `Change-IP [your interface index]* [new ip]* [Subnet Length Prefix] [Address family] [Gateway IP] [DNS IPs]`
 * `Change-IP 12 10.1.10.11`
 * `Change-IP -NetIfIndex 12 -NewIP 10.1.10.1`
 * `Change-IP 12 10.1.10.11 24`
