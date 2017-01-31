@@ -6,9 +6,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.sln*
-*.pssproj*
-*.psd1*
 /bin/
 /obj/
 
