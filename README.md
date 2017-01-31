@@ -26,4 +26,4 @@ You need to know your Interface Index. you may find it by this command
 * `Change-Ip -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -GatewayIP $null -DNSIPs $null`
 * `Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168.1.1 -DNSIPs 192.168.1.2,192.168.1.3`
 
-`NOT: You need to run powershell with Administrative priviliges to change IP and use this module. Otherwise, it will give 'Access Denied' error.`
+`NOT: You need to run powershell with Administrative priviliges to change IP and use this module. Otherwise, it will throw 'Access Denied' error.`
