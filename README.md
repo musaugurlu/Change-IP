@@ -16,7 +16,7 @@ There is also no need to remove existing IP from powershell if you use powershel
  * or, If you just want to save it in a folder and import it, use this `Save-Module -Name Change-IP -Path <path>`
 
 ## Requiremet
-* You will need "Run Powershell as Administrator" to change the ip, so to use this module.
+* You will need to "Run Powershell as Administrator" to change the IP, so to use this module.
 * You need to know your Interface Index. You may find it with this command
 `Get-NetIPAddress | select ipaddress,interfaceindex`
 
