@@ -13,11 +13,11 @@ There is also no need to remove existing IP from powershell if you use powershel
 
 ### option 2
  * Use powershell command `Install-Module -Name Change-IP`
- * or, If you just want to save it a folder an import it, use this `Save-Module -Name Change-IP -Path <path>`
+ * or, If you just want to save it in a folder and import it, use this `Save-Module -Name Change-IP -Path <path>`
 
 ## Requiremet
-
-You need to know your Interface Index. you may find it by this command
+* You will need "Run Powershell as Administrator" to change the ip, so to use this module.
+* You need to know your Interface Index. You may find it with this command
 `Get-NetIPAddress | select ipaddress,interfaceindex`
 
 ## Usage
@@ -30,5 +30,3 @@ You need to know your Interface Index. you may find it by this command
 * `Change-IP -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -AddrFamily IPv4`
 * `Change-Ip -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -GatewayIP $null -DNSIPs $null`
 * `Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168.1.1 -DNSIPs 192.168.1.2,192.168.1.3`
-
-`NOT: You need to run powershell with Administrative priviliges to change IP and use this module. Otherwise, it will throw 'Access Denied' error.`
