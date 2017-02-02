@@ -38,6 +38,6 @@ Warning:
 `WARNING: The names of some imported commands from the module 'Change-IP' include unapproved verbs that might make them less discoverable. To find the com
 mands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.`
 
-You may suppress the warning by 
-* adding `-DisableNameChecking` to import cmdlet like `Import-Module "path\to\Module" -DisableNameChecking`
+You may 
+* suppress the warning by adding `-DisableNameChecking` to import cmdlet like `Import-Module "path\to\Module" -DisableNameChecking`
 * or, you may change the function name from `Change-IP` to `Switch-IP` or to any of the approved verb inside the module file. 
