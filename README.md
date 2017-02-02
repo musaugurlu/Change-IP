@@ -8,8 +8,8 @@ There is also no need to remove existing IP from powershell if you use powershel
 
 ### Option 1
 - Download project as a zip file
-- Unzip it to `ProgramFiles\WindowsPowerShell\Modules` folder. (you may open this folder from powershell with this command `Invoke-Item $env:ProgramFiles\WindowsPowerShell\Modules`)
-- Rename it the folder from `Change-IP-master` to `Change-IP`
+- Unzip it to `ProgramFiles\WindowsPowerShell\Modules` folder. (you may open this folder from powershell with this command:  `Invoke-Item $env:ProgramFiles\WindowsPowerShell\Modules`)
+- Rename it from `Change-IP-master` to `Change-IP`
 - run `Get-Module -ListAvailable` command and make sure the modue is there.
 
 ### Option 2
