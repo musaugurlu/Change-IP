@@ -7,11 +7,17 @@ There is also no need to remove existing IP from powershell if you use powershel
 ## Installation
 
 ### Option 1
+- Download project as a zip file
+- Unzip it to `ProgramFiles\WindowsPowerShell\Modules` folder. (you may open this folder from powershell with this command `Invoke-Item $env:ProgramFiles\WindowsPowerShell\Modules`)
+- Rename it the folder from `Change-IP-master` to `Change-IP`
+- run `Get-Module -ListAvailable` command and make sure the modue is there.
+
+### Option 2
 * Downoad Change-IP.psm1 and move it to your desired path.
 * Import the module the powershell
 > `Import-Module your\path\to\Change-IP.psm1`
 
-### option 2
+### option 3
  * Use powershell command `Install-Module -Name Change-IP`
  * or, If you just want to save it in a folder and import it, use this `Save-Module -Name Change-IP -Path <path>`
 
