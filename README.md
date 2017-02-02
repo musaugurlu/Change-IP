@@ -30,3 +30,14 @@ There is also no need to remove existing IP from powershell if you use powershel
 * `Change-IP -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -AddrFamily IPv4`
 * `Change-Ip -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -GatewayIP $null -DNSIPs $null`
 * `Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168.1.1 -DNSIPs 192.168.1.2,192.168.1.3`
+
+## Note
+Powershell gives the warning below when the module is imported because the name in the function "Change" is not an approved verb by Powershell. I could use  the verb "Switch" (and the function would be "Switch-IP") but I didn't do it on purpose. I thought Microsoft or someone else may make an official cmdlet with the same name and I would need to change it again.
+
+Warning: 
+`WARNING: The names of some imported commands from the module 'Change-IP' include unapproved verbs that might make them less discoverable. To find the com
+mands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.`
+
+You may suppress the warning by 
+* adding `-DisableNameChecking` to import cmdlet like `Import-Module "path\to\Module" -DisableNameChecking`
+* or, you may change the function name from `Change-IP` to `Switch-IP` or to any of the approved verb inside the module file. 
