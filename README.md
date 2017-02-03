@@ -14,7 +14,7 @@ There is also no need to remove existing IP from powershell if you use powershel
 
 ### Option 2
 * Downoad Change-IP.psm1 and move it to your desired path.
-* Import the module the powershell
+* Import the module to powershell
 > `Import-Module your\path\to\Change-IP.psm1`
 
 ### Option 3
