@@ -1,4 +1,6 @@
-function Change-IP {
+#Requires -RunAsAdministrator
+
+function Set-IPAddress {
 <#
 .SYNOPSIS
 Changes your current Ip Address
@@ -19,17 +21,17 @@ Sets gateway address
 .PARAMETER DNSIPs
 Sets DNS Server addresses
 .EXAMPLE
-Change-Ip -NetIfIndex 12 -NewIP 10.1.10.1
+Set-IPAddress -NetIfIndex 12 -NewIP 10.1.10.1
 .EXAMPLE
-Change-Ip -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -AddrFamily IPv4
+Set-IPAddress -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -AddrFamily IPv4
 .EXAMPLE
-Change-Ip 12 10.1.10.11
+Set-IPAddress 12 10.1.10.11
 .EXAMPLE
-Change-Ip 12 10.1.10.11 24
+Set-IPAddress 12 10.1.10.11 24
 .EXAMPLE
-Change-Ip -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -GatewayIP $null -DNSIPs $null
+Set-IPAddress -NetIfIndex 12 -NewIP 10.1.10.1 -SubnetLength 24 -GatewayIP $null -DNSIPs $null
 .EXAMPLE
-Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168.1.1 -DNSIPs 192.168.1.2,192.168.1.3
+Set-IPAddress -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168.1.1 -DNSIPs 192.168.1.2,192.168.1.3
 #>
 
 	[CmdletBinding()]
@@ -79,7 +81,7 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 	#if Gateway address provided, set Default Gateway. if not, system will use the old one
 	if($PSBoundParameters.ContainsKey("GatewayIP")) {
 				
-		$CurrentGatewayIP = (Get-NetRoute -InterfaceIndex $NetIfIndex -EA SilentlyContinue | where {($_.DestinationPrefix -like "0.0.0.0/0")}).NextHop
+		$CurrentGatewayIP = (Get-NetRoute -InterfaceIndex $NetIfIndex -EA SilentlyContinue | Where-Object {($_.DestinationPrefix -like "0.0.0.0/0")}).NextHop
 		
 		#Remove Default Gateway if exist
 		if($CurrentGatewayIP -notlike "") {
@@ -101,7 +103,7 @@ Change-Ip -NetIfIndex 10 -NewIP 192.168.1.25 -SubnetLength 23 -GatewayIP 192.168
 
 		#if given DNS address is $null, then remove DNS addresses. if not, set them up
 		if($DNSIPs -eq $null) {
-			Set-DnsClientServerAddress –InterfaceIndex $NetIfIndex -ResetServerAddresses
+			Set-DnsClientServerAddress -InterfaceIndex $NetIfIndex -ResetServerAddresses
 		} else {
 			Set-DnsClientServerAddress -InterfaceIndex $NetIfIndex -ServerAddresses $DNSIPs
 		}
