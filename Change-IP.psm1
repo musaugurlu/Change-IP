@@ -1,5 +1,3 @@
-#Requires -RunAsAdministrator
-
 function Set-IPAddress {
 <#
 .SYNOPSIS
