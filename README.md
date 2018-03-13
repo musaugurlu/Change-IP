@@ -1,10 +1,10 @@
 # Change-IP
 
 Changes your current Ip Address without going to adapter settings, tons of clicks and filling out all the ips.
-There is also no need to remove existing IP from powershell if you use powershell `New-NetIPAddress` command to change your IP.
+There is also no need to remove existing IP from powershell as you do if you use powershell `New-NetIPAddress` command to change your IP.
 
 ## UPDATE
-The command name has been changed to ` Set-IPADDress ` to remove 
+The command name has been changed to ` Set-IPADDress ` to remove "Unapproved Verb" warning
 
 ## Installation
 
